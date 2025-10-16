@@ -1,6 +1,8 @@
-export * from "../internal/fhevm";
-export * from "../internal/RelayerSDKLoader";
-export * from "../internal/PublicKeyStorage";
-export * from "../internal/fhevmTypes";
-export * from "../internal/constants";
+/**
+ * FHEVM SDK Core
+ * Framework-independent core functionality for FHEVM
+ */
 
+export * from './instance';
+export * from './encrypt';
+export * from './decrypt';
