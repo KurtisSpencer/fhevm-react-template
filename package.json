@@ -1,73 +1,61 @@
 {
-  "name": "anonymous-marathon-platform",
+  "name": "fhevm-universal-sdk-monorepo",
   "version": "1.0.0",
-  "description": "Privacy-first marathon registration system using FHE technology",
-  "type": "module",
+  "description": "Universal FHEVM SDK for building confidential frontends",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
   "scripts": {
-    "compile": "hardhat compile",
-    "test": "hardhat test",
-    "test:gas": "REPORT_GAS=true hardhat test",
-    "test:dos": "hardhat test test/dos.test.js",
-    "test:load": "hardhat test test/load.test.js",
-    "coverage": "hardhat coverage",
-    "deploy": "hardhat run scripts/deploy.js",
-    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
-    "verify": "hardhat run scripts/verify.js --network sepolia",
-    "interact": "hardhat run scripts/interact.js --network sepolia",
-    "simulate": "hardhat run scripts/simulate.js --network sepolia",
-    "node": "hardhat node",
-    "clean": "hardhat clean",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "lint:sol": "solhint 'contracts/**/*.sol'",
-    "lint:sol:fix": "solhint 'contracts/**/*.sol' --fix",
-    "lint:sol:security": "solhint 'contracts/**/*.sol' --config .solhint-security.json",
-    "lint:security": "eslint . --config .eslintrc.security.json",
-    "prettier": "prettier --write .",
-    "prettier:check": "prettier --check .",
-    "format": "prettier --write . && npm run lint:fix && npm run lint:sol:fix",
-    "security:audit": "npm audit --audit-level=moderate",
-    "security:check": "npm run lint:sol:security && npm run security:audit",
-    "size-check": "hardhat size-contracts",
-    "complexity": "hardhat check-complexity",
-    "gas:compare": "npm run test:gas > gas-current.txt && echo 'Gas comparison saved'",
-    "pre-commit": "npm run prettier:check && npm run lint && npm run lint:sol",
-    "pre-push": "npm run test && npm run security:check",
-    "commit-msg": "echo 'Commit message validated'",
-    "prepare": "husky install || true",
-    "docs:generate": "hardhat docgen"
+    "build": "npm run build:sdk && npm run build:examples",
+    "build:sdk": "cd packages/fhevm-sdk && npm run build",
+    "build:examples": "npm run build:nextjs",
+    "build:nextjs": "cd examples/nextjs && npm run build",
+    "dev": "npm run dev:nextjs",
+    "dev:nextjs": "cd examples/nextjs && npm run dev",
+    "dev:marathon": "cd examples/anonymous-marathon && npm run dev",
+    "test": "npm run test:sdk",
+    "test:sdk": "cd packages/fhevm-sdk && npm test",
+    "test:integration": "npm run test && npm run build",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "clean": "rm -rf node_modules packages/*/node_modules examples/*/node_modules",
+    "install:all": "npm install && npm run install:sdk && npm run install:examples",
+    "install:sdk": "cd packages/fhevm-sdk && npm install",
+    "install:examples": "cd examples/nextjs && npm install"
   },
   "keywords": [
-    "blockchain",
-    "ethereum",
-    "fhe",
+    "fhevm",
+    "zama",
+    "encryption",
     "privacy",
-    "marathon",
-    "smart-contracts",
-    "hardhat"
+    "web3",
+    "sdk",
+    "react",
+    "nextjs",
+    "typescript"
   ],
-  "author": "",
+  "author": "FHEVM SDK Contributors",
   "license": "MIT",
   "devDependencies": {
-    "@nomicfoundation/hardhat-ethers": "^3.0.5",
-    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
-    "@nomicfoundation/hardhat-verify": "^2.0.3",
-    "eslint": "^8.57.0",
-    "hardhat": "^2.19.4",
-    "hardhat-gas-reporter": "^1.0.9",
-    "prettier": "^3.2.5",
-    "prettier-plugin-solidity": "^1.3.1",
-    "solhint": "^4.1.1",
-    "solidity-coverage": "^0.8.5"
-    ,"eslint-plugin-security": "^2.1.0"
-    ,"hardhat-contract-sizer": "^2.10.0"
-    ,"husky": "^9.0.10"
-    ,"lint-staged": "^15.2.0"
-    ,"solhint-plugin-prettier": "^0.1.0"
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "typescript": "^5.3.3"
   },
-  "dependencies": {
-    "@fhevm/solidity": "^0.2.0",
-    "dotenv": "^16.3.1",
-    "ethers": "^6.10.0"
-  }
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/fhevm-universal-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/fhevm-universal-sdk/issues"
+  },
+  "homepage": "https://github.com/your-org/fhevm-universal-sdk#readme"
 }
