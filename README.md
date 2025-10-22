@@ -11,9 +11,13 @@ A universal, developer-friendly SDK that wraps all necessary FHEVM packages into
 
 ## 🌐 Live Demo
 
-**🎥 Video Demo**: [Watch Demo](./demo.mp4)
+**🌐 GitHub Repository**: [https://github.com/KurtisSpencer/fhevm-react-template](https://github.com/KurtisSpencer/fhevm-react-template)
+
+**🚀 Live Example**: [https://fhe-marathon.vercel.app/](https://fhe-marathon.vercel.app/)
+
+**🎥 Demo Video**: Download and view `demo.mp4` from this repository (the video file needs to be downloaded locally to watch)
+
 **📦 NPM Package**: `@fhevm/universal-sdk` (coming soon)
-**🚀 Next.js Example**: [Live Deployment](#)
 
 ## ✨ Features
 
@@ -313,7 +317,7 @@ async function processData() {
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/KurtisSpencer/fhevm-react-template.git
 cd fhevm-react-template
 
 # Install all dependencies
