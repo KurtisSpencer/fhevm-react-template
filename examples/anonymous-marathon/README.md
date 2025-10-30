@@ -1,336 +1,244 @@
-# Anonymous Marathon - Real-World dApp Example
+# Anonymous Marathon Registration System
 
-A privacy-preserving marathon registration platform built with the Universal FHEVM SDK.
+A privacy-first long-distance running competition platform built with Fully Homomorphic Encryption (FHE) technology, enabling runners to participate in marathons while keeping their personal information completely confidential.
 
-## Overview
+## 🌐 Live Demo
 
-This example demonstrates a production-ready dApp using FHEVM for privacy:
-- **Encrypted Runner Data**: Age, experience, and previous times are encrypted
-- **Anonymous Identifiers**: Runners maintain privacy until results are revealed
-- **Homomorphic Operations**: Computations on encrypted data
-- **SDK Integration**: All FHEVM operations use the Universal SDK
+**Website**: [https://anonymous-marathon.vercel.app/](https://anonymous-marathon.vercel.app/)
 
-## Features
+**Demo Video**: [View Demo](./AnonymousMarathon.mp4)
 
-- **Marathon Creation**: Organizers create events with registration deadlines
-- **Private Registration**: Runners register with encrypted personal data
-- **Time Recording**: Record finish times while maintaining privacy
-- **Leaderboard**: Anonymous leaderboard until official reveal
-- **Prize Distribution**: Automated prize pool distribution
+## 📋 Overview
 
-## Smart Contract
+The Anonymous Marathon Registration System revolutionizes traditional race management by leveraging blockchain technology and Fully Homomorphic Encryption (FHE) to protect participant privacy. Runners can register for events, submit sensitive personal data, and compete without revealing their identities or private information to organizers or other participants.
 
-The `AnonymousMarathon.sol` contract handles:
-- Marathon lifecycle management
-- Encrypted runner registration
-- Time recording and verification
-- Privacy-preserving leaderboards
-- Prize pool management
+## 🔐 Core Concepts
 
-### Key Data Structures
+### Fully Homomorphic Encryption (FHE)
 
-```solidity
-struct Runner {
-    euint32 encryptedAge;          // FHE encrypted
-    euint8 encryptedExperience;    // FHE encrypted
-    euint16 encryptedPreviousTime; // FHE encrypted
-    bool hasRegistered;
-    bool hasFinished;
-    euint32 encryptedFinishTime;   // FHE encrypted
-    uint256 registrationTime;
-    bytes32 anonymousId;           // Privacy identifier
-}
-```
+At the heart of this system is FHE technology, which allows computations to be performed on encrypted data without ever decrypting it. This means:
 
-## SDK Integration
+- **Privacy Protection**: Personal information (age, experience level, previous race times) remains encrypted at all times
+- **Verifiable Results**: Race organizers can verify eligibility and calculate results without accessing raw participant data
+- **Zero-Knowledge Participation**: Runners compete under anonymous identifiers while maintaining data integrity
 
-This example showcases the Universal FHEVM SDK in action:
+### Anonymous Marathon Registration
 
-### 1. Setup (< 10 lines)
+The system enables complete privacy in competitive running events:
 
-```typescript
-import { FhevmProvider, useEncrypt, useDecrypt } from '@fhevm/universal-sdk';
+1. **Encrypted Profile Data**: Age, experience level, and historical performance data are encrypted on submission
+2. **Anonymous Identifiers**: Each participant selects a unique anonymous ID for public-facing race activities
+3. **Privacy-Preserving Leaderboards**: Results can be displayed and ranked without compromising participant identities
+4. **Secure Prize Distribution**: Winners can be verified and rewarded through smart contracts without revealing personal details
 
-function App() {
-  return (
-    <FhevmProvider config={{ network: 'sepolia' }}>
-      <MarathonApp />
-    </FhevmProvider>
-  );
-}
-```
+### Smart Contract Architecture
 
-### 2. Encrypt Runner Data
+The system utilizes blockchain smart contracts to ensure:
 
-```typescript
-function RegisterRunner() {
-  const { encrypt } = useEncrypt();
+- **Decentralized Trust**: No single entity controls participant data
+- **Transparent Operations**: All race rules and logic are publicly verifiable
+- **Immutable Records**: Race results and registrations cannot be tampered with
+- **Automated Execution**: Registration, verification, and prize distribution happen automatically
 
-  const handleRegister = async (age: number, experience: number, previousTime: number) => {
-    // Encrypt sensitive data
-    const encryptedAge = await encrypt(age, 'uint32');
-    const encryptedExp = await encrypt(experience, 'uint8');
-    const encryptedTime = await encrypt(previousTime, 'uint16');
+## 🎯 Key Features
 
-    // Register with encrypted values
-    await contract.registerForMarathon(
-      marathonId,
-      encryptedAge.handles[0],
-      encryptedExp.handles[0],
-      encryptedTime.handles[0],
-      anonymousId,
-      { value: registrationFee }
-    );
-  };
+### For Runners
 
-  return <RegistrationForm onSubmit={handleRegister} />;
-}
-```
+- **Privacy-First Registration**: Submit personal data that remains encrypted end-to-end
+- **Anonymous Competition**: Participate under pseudonyms while maintaining competitive integrity
+- **Secure Data Storage**: All sensitive information protected by cryptographic encryption
+- **Transparent Results**: View race outcomes and leaderboards without compromising privacy
 
-### 3. Decrypt Results
+### For Organizers
 
-```typescript
-function ViewResults() {
-  const { decrypt } = useDecrypt();
+- **Encrypted Data Management**: Access aggregated insights without viewing individual participant details
+- **Fair Competition**: Verify participant eligibility without accessing raw personal data
+- **Automated Administration**: Smart contracts handle registration, verification, and results
+- **Fraud Prevention**: Cryptographic proofs ensure data integrity and prevent cheating
 
-  const revealTime = async (handle: bigint) => {
-    const result = await decrypt(handle, {
-      contractAddress: MARATHON_ADDRESS,
-      userAddress: account,
-    });
+### Technical Features
 
-    return result.value; // Decrypted finish time
-  };
+- **Blockchain Integration**: Built on Ethereum-compatible networks
+- **MetaMask Support**: Easy wallet connection for seamless user experience
+- **Real-time Updates**: Live leaderboards and race status
+- **Responsive Design**: Optimized for desktop and mobile devices
 
-  return <Leaderboard onReveal={revealTime} />;
-}
-```
+## 📊 How It Works
 
-## Running the Example
+### 1. Marathon Creation
+
+Organizers create new marathon events by specifying:
+- Event name and date
+- Registration deadline
+- Maximum participant capacity
+- Registration fee (optional)
+
+### 2. Participant Registration
+
+Runners register by providing:
+- **Encrypted Personal Data**: Age, experience level, previous best time
+- **Anonymous Identifier**: A unique pseudonym for public display
+- **Registration Fee**: Paid in cryptocurrency via smart contract
+
+All personal data is encrypted using FHE before being stored on the blockchain.
+
+### 3. Race Participation
+
+During the event:
+- Runners compete under their anonymous identifiers
+- Finish times are recorded and encrypted
+- Real-time leaderboards display anonymous rankings
+
+### 4. Results & Verification
+
+After race completion:
+- Encrypted finish times are processed using FHE computations
+- Winners are determined without decrypting individual data
+- Prize distribution is automated through smart contracts
+- Participants can verify their encrypted results
+
+## 🔧 Technology Stack
+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Blockchain**: Ethereum / EVM-compatible networks
+- **Smart Contracts**: Solidity
+- **Encryption**: Fully Homomorphic Encryption (FHE)
+- **Web3**: Ethers.js
+- **Wallet**: MetaMask integration
+
+## 📝 Smart Contract
+
+**Contract Address**: `0xB1839A160F922CD7EdB591458fF2089A8EDF6dF1`
+
+The smart contract provides the following key functions:
+
+- `createMarathon()`: Create a new marathon event
+- `registerForMarathon()`: Register as a participant with encrypted data
+- `recordFinishTime()`: Record encrypted finish times
+- `getLeaderboard()`: Retrieve anonymous rankings
+- `completeMarathon()`: Finalize event and distribute prizes
+
+## 🎨 User Interface
+
+The application features a modern, intuitive interface with:
+
+- **Green Theme**: Professional, eco-friendly design aesthetic
+- **Wallet Connection**: Seamless MetaMask integration
+- **Form Validation**: Real-time input validation and error handling
+- **Responsive Layout**: Mobile-first design approach
+- **Status Indicators**: Clear visual feedback for all operations
+
+## 🔒 Privacy & Security
+
+### Data Protection
+
+- **End-to-End Encryption**: All personal data encrypted before leaving user's device
+- **On-Chain Privacy**: Encrypted data stored on blockchain, never exposed
+- **Anonymous Identifiers**: Public-facing pseudonyms protect real identities
+- **Cryptographic Proofs**: Verify data integrity without decryption
+
+### Security Measures
+
+- **Smart Contract Auditing**: Thoroughly tested contract logic
+- **Access Control**: Only authorized operations permitted
+- **Immutable Records**: Blockchain ensures data cannot be altered
+- **Decentralized Storage**: No central point of failure
+
+## 🌟 Use Cases
+
+### Traditional Marathon Events
+
+- City marathons with privacy-conscious participants
+- International races with diverse privacy regulations
+- Corporate running events requiring employee data protection
+
+### Specialized Competitions
+
+- Age-group competitions without age disclosure
+- Experience-based seeding without revealing history
+- Performance-based registration without public data
+
+### Research & Development
+
+- Privacy-preserving sports analytics
+- Anonymous performance tracking
+- Encrypted health and fitness data collection
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-```bash
-# Install dependencies
-npm install
+- Modern web browser (Chrome, Firefox, Edge, or Safari)
+- MetaMask wallet extension installed
+- Cryptocurrency for transaction fees and registration
 
-# Configure environment
-cp .env.example .env
-# Edit .env with your settings
-```
+### Quick Start
 
-### Compile Contracts
+1. Visit [https://anonymous-marathon.vercel.app/](https://anonymous-marathon.vercel.app/)
+2. Click "Connect Wallet" to link your MetaMask
+3. Browse available marathons or create a new event
+4. Register for an event with your encrypted personal data
+5. Participate anonymously and track results on the leaderboard
 
-```bash
-npx hardhat compile
-```
+## 📚 Documentation
 
-### Run Tests
+### For Participants
 
-```bash
-npx hardhat test
-```
+**Registration Process**:
+1. Select a marathon from the available events list
+2. Enter your age (will be encrypted)
+3. Choose your experience level (1-10 scale, will be encrypted)
+4. Provide your previous best time in minutes (will be encrypted)
+5. Create a unique anonymous identifier
+6. Pay the registration fee and submit
 
-### Deploy
+**Understanding Privacy**:
+- Your personal data is encrypted before submission
+- Only you can decrypt your own information
+- Race organizers never see your raw data
+- Anonymous identifiers are used for all public displays
 
-```bash
-# Deploy to Sepolia
-npx hardhat run scripts/deploy.js --network sepolia
+### For Organizers
 
-# Verify on Etherscan
-npx hardhat run scripts/verify.js --network sepolia
-```
+**Creating an Event**:
+1. Connect your wallet
+2. Fill in marathon details (name, date, deadline, capacity)
+3. Submit transaction to create event on blockchain
+4. Share event details with potential participants
 
-### Frontend
+**Managing Results**:
+- View encrypted participant data
+- Record finish times (encrypted automatically)
+- Complete race to finalize results
+- Smart contract handles prize distribution
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
+## 🤝 Contributing
 
-## Project Structure
+We welcome contributions from the community! Areas where you can help:
 
-```
-anonymous-marathon/
-├── contracts/
-│   └── AnonymousMarathon.sol      # Main contract
-├── scripts/
-│   ├── deploy.js                  # Deployment script
-│   ├── verify.js                  # Etherscan verification
-│   └── interact.js                # Interaction examples
-├── frontend/
-│   ├── components/
-│   │   ├── RegisterForm.tsx       # Registration with SDK
-│   │   ├── Leaderboard.tsx        # Results display
-│   │   └── MarathonList.tsx       # Marathon listing
-│   ├── hooks/
-│   │   └── useMarathon.ts         # Contract interaction
-│   └── pages/
-│       └── index.tsx              # Main page
-├── test/
-│   └── AnonymousMarathon.test.js  # Comprehensive tests
-├── hardhat.config.js
-├── package.json
-└── README.md
-```
+- **UI/UX Improvements**: Enhance the user interface
+- **Security Audits**: Review smart contract code
+- **Feature Development**: Add new functionality
+- **Documentation**: Improve guides and tutorials
+- **Testing**: Help identify and report bugs
 
-## Key Workflows
+## 🔗 Links
 
-### 1. Create Marathon
+-
+- **Live Application**: [https://anonymous-marathon.vercel.app/](https://anonymous-marathon.vercel.app/)
+- **Demo Video**: [Watch Demo](./AnonymousMarathon.mp4)
 
-```typescript
-const createMarathon = async (
-  name: string,
-  eventDate: number,
-  registrationDeadline: number,
-  maxParticipants: number
-) => {
-  const tx = await contract.createMarathon(
-    name,
-    eventDate,
-    registrationDeadline,
-    maxParticipants
-  );
-  await tx.wait();
-};
-```
+## 📧 Support
 
-### 2. Register Runner
+For questions, issues, or suggestions:
+- Open an issue on GitHub
+- Check existing documentation
+- Review the demo video for guidance
 
-```typescript
-const registerRunner = async (runnerData) => {
-  // SDK handles encryption automatically
-  const encryptedAge = await encrypt(runnerData.age, 'uint32');
-  const encryptedExp = await encrypt(runnerData.experience, 'uint8');
-  const encryptedTime = await encrypt(runnerData.previousTime, 'uint16');
+## 🙏 Acknowledgments
 
-  await contract.registerForMarathon(
-    marathonId,
-    encryptedAge.handles[0],
-    encryptedExp.handles[0],
-    encryptedTime.handles[0],
-    runnerData.anonymousId,
-    { value: registrationFee }
-  );
-};
-```
+This project demonstrates the power of combining blockchain technology with Fully Homomorphic Encryption to create privacy-preserving applications. Special thanks to the FHE and Web3 communities for their groundbreaking work in cryptography and decentralized systems.
 
-### 3. Record Finish Time
+---
 
-```typescript
-const recordFinishTime = async (runnerId: address, timeMinutes: number) => {
-  const encryptedTime = await encrypt(timeMinutes, 'uint32');
-
-  await contract.recordFinishTime(
-    marathonId,
-    runnerId,
-    encryptedTime.handles[0]
-  );
-};
-```
-
-### 4. View Results
-
-```typescript
-const viewResults = async (handle: bigint) => {
-  const result = await decrypt(handle, {
-    contractAddress: marathonAddress,
-    userAddress: account,
-  });
-
-  console.log('Finish time:', result.value, 'minutes');
-};
-```
-
-## Privacy Features
-
-### Data Encryption
-
-All sensitive runner data is encrypted using FHEVM:
-- **Age**: `euint32` - Encrypted 32-bit unsigned integer
-- **Experience**: `euint8` - Encrypted 8-bit unsigned integer (1-10 scale)
-- **Previous Time**: `euint16` - Encrypted previous marathon time
-- **Finish Time**: `euint32` - Encrypted race completion time
-
-### Anonymous Identifiers
-
-Runners use anonymous IDs (bytes32) for privacy:
-- Generated off-chain
-- Linked to wallet but not revealed publicly
-- Allows participation tracking without identity exposure
-
-### Controlled Revelation
-
-Results can be revealed in a controlled manner:
-- Only after race completion
-- With proper authorization
-- Through decryption permits
-
-## Testing
-
-The example includes comprehensive tests:
-
-```bash
-# Run all tests
-npm test
-
-# Test with gas reporting
-npm run test:gas
-
-# Test with coverage
-npm run test:coverage
-```
-
-### Test Coverage
-
-- ✅ Marathon creation and management
-- ✅ Runner registration with encrypted data
-- ✅ Time recording and verification
-- ✅ Leaderboard functionality
-- ✅ Access control
-- ✅ Edge cases and error handling
-
-## Deployment
-
-### Sepolia Testnet
-
-```bash
-# Set environment variables in .env
-SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/YOUR_KEY
-PRIVATE_KEY=your_private_key
-ETHERSCAN_API_KEY=your_etherscan_key
-
-# Deploy
-npm run deploy:sepolia
-
-# Verify
-npm run verify:sepolia
-```
-
-### Contract Addresses
-
-- **Sepolia**: `0x...` (update after deployment)
-- **Gateway**: `https://gateway.sepolia.zama.ai`
-
-## SDK Benefits Demonstrated
-
-This example showcases why the Universal FHEVM SDK is valuable:
-
-1. **Simplified Encryption**: No manual fhevmjs setup
-2. **React Integration**: Hooks make encryption/decryption easy
-3. **Type Safety**: Full TypeScript support
-4. **Error Handling**: Built-in error management
-5. **Reusable Components**: Pre-built UI components
-6. **Consistent API**: wagmi-like patterns
-
-## Learn More
-
-- [Universal FHEVM SDK Documentation](../../README.md)
-- [FHEVM Documentation](https://docs.zama.ai/fhevm)
-- [Solidity Library](https://github.com/zama-ai/fhevm)
-- [Example Video Demo](../../demo.mp4)
-
-## License
-
-MIT
+**Built with privacy in mind. Run with confidence. Compete with anonymity.**

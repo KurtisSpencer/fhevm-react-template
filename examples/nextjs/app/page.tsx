@@ -108,7 +108,7 @@ export default function Home() {
           <p>
             Built with{' '}
             <a
-              href="https://github.com/your-org/fhevm-universal-sdk"
+              href="https://github.com/KurtisSpencer/fhevm-react-template"
               target="_blank"
               rel="noopener noreferrer"
             >
