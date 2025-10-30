@@ -131,13 +131,30 @@ fhevm-react-template/
 │       │   │   ├── FhevmProvider.tsx
 │       │   │   ├── EncryptInput.tsx
 │       │   │   └── DecryptOutput.tsx
+│       │   ├── adapters/       # Framework adapters
+│       │   │   ├── react.ts    # React adapter
+│       │   │   └── index.ts
+│       │   ├── utils/          # Utility functions
+│       │   │   └── index.ts
+│       │   ├── types/          # TypeScript type definitions
+│       │   │   └── index.ts
 │       │   └── index.ts        # Main exports
 │       └── package.json
 │
+├── templates/                  # 📋 Framework Templates
+│   ├── nextjs/                # Next.js template
+│   ├── react/                 # React template
+│   ├── vue/                   # Vue template
+│   └── nodejs/                # Node.js template
+│
 ├── examples/
 │   ├── nextjs/                 # 📱 Next.js Example
-│   │   ├── app/
-│   │   ├── components/
+│   │   ├── src/
+│   │   │   ├── app/           # App Router
+│   │   │   ├── components/    # UI & FHE components
+│   │   │   ├── lib/           # Utilities
+│   │   │   ├── hooks/         # Custom hooks
+│   │   │   └── types/         # Type definitions
 │   │   └── package.json
 │   │
 │   └── anonymous-marathon/     # 🏃 Real dApp Example
@@ -211,7 +228,7 @@ import { FhevmProvider, EncryptInput, DecryptOutput } from '@fhevm/universal-sdk
 
 ### 1. Next.js Integration
 
-Full example in `examples/nextjs/`
+Full example in `examples/nextjs/` with complete App Router structure, API routes, and components.
 
 ```typescript
 // app/page.tsx
@@ -221,7 +238,7 @@ import { FhevmProvider, useFhevm, useEncrypt } from '@fhevm/universal-sdk';
 
 export default function Home() {
   return (
-    <FhevmProvider>
+    <FhevmProvider config={{ network: 'sepolia' }}>
       <EncryptionDemo />
     </FhevmProvider>
   );
@@ -231,18 +248,31 @@ function EncryptionDemo() {
   const { ready } = useFhevm();
   const { encrypt } = useEncrypt();
 
+  const handleEncrypt = async () => {
+    const result = await encrypt(42, 'uint64');
+    console.log('Encrypted:', result);
+  };
+
   if (!ready) return <div>Loading FHEVM...</div>;
 
   return (
     <div>
       <h1>Confidential dApp</h1>
-      <button onClick={() => encrypt(42)}>
+      <button onClick={handleEncrypt}>
         Encrypt Value
       </button>
     </div>
   );
 }
 ```
+
+**Features in Next.js Example:**
+- Complete App Router structure with API routes
+- Server-side and client-side FHE operations
+- Pre-built components (Encryption, Computation, Key Management)
+- Real-world examples (Banking, Medical records)
+- Custom hooks and utilities
+- Full TypeScript support
 
 ### 2. Anonymous Marathon (Real dApp)
 
